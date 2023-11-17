@@ -1,35 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/contact/contact.reducer';
 import PropTypes from 'prop-types';
 import css from './contacts.module.css';
-import Filter from 'components/Filter/Filter';
 
 const Contacts = () => {
   const dispatch = useDispatch();
-  const [filter, setFilter] = useState('');
-  const selectContacts = state => state.contactsStore.contacts;
-  const contacts = useSelector(selectContacts);
+  const contacts = useSelector(state => state.contactsStore.contacts);
+  const filter = useSelector(state => state.filterReducer);
 
-  const handleFilterChange = value => {
-    setFilter(value);
-  };
+  const filteredContacts =
+    contacts && filter
+      ? contacts.filter(
+          contact =>
+            contact.name &&
+            contact.name.toLowerCase().includes(filter.toLowerCase())
+        )
+      : contacts;
 
   const handleDeleteContact = contactId => {
     dispatch(deleteContact(contactId));
   };
 
-  const filteredContacts = contacts
-    ? contacts.filter(contact =>
-        contact.name.toLowerCase().includes(filter.toLowerCase())
-      )
-    : null;
-
   return (
     <div>
       <h2>Contacts</h2>
-      <Filter handleFilterChange={handleFilterChange} />
-      {filteredContacts !== null && (
+      {filteredContacts && filteredContacts.length > 0 && (
         <ul className={css.contactsList}>
           {filteredContacts.map(contact => (
             <li key={contact.id}>
