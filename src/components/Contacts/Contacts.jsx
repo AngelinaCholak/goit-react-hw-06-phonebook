@@ -6,8 +6,12 @@ import css from './contacts.module.css';
 
 const Contacts = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contactsStore.contacts);
-  const filter = useSelector(state => state.filterReducer);
+  const selectContacts = state => state.contactsStore.contacts;
+  const contacts = useSelector(selectContacts);
+
+const selectFilter = state => state.filterReducer;
+const filter = useSelector(selectFilter);
+
 
   const filteredContacts =
     contacts && filter
