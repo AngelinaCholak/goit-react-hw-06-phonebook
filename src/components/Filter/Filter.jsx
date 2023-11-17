@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import css from './Filter.module.css';
 
-export const Filter = ({ handleFilterChange, filter }) => {
+const Filter = ({ handleFilterChange }) => {
+  const [filterValue, setFilterValue] = useState('');
+
   const handleChange = event => {
-    handleFilterChange(event.target.value);
+    const value = event.target.value;
+    setFilterValue(value);
+    handleFilterChange(value);
   };
 
   return (
@@ -12,8 +16,9 @@ export const Filter = ({ handleFilterChange, filter }) => {
         type="text"
         name="filter"
         className={css.filterInput}
-        value={filter}
+        value={filterValue}
         onChange={handleChange}
+        placeholder="Filter contacts"
       />
       <p className={css.filterLabel}>Find Contacts by name</p>
     </div>
@@ -21,4 +26,3 @@ export const Filter = ({ handleFilterChange, filter }) => {
 };
 
 export default Filter;
-
