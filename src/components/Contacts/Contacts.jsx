@@ -3,14 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/contact/contact.reducer';
 import PropTypes from 'prop-types';
 import css from './contacts.module.css';
+import { selectContacts, selectFilter } from 'redux/contact/selectors';
 
 const Contacts = () => {
   const dispatch = useDispatch();
-  const selectContacts = state => state.contactsStore.contacts;
   const contacts = useSelector(selectContacts);
-
-const selectFilter = state => state.filterReducer;
-const filter = useSelector(selectFilter);
+  const filter = useSelector(selectFilter);
 
 
   const filteredContacts =
